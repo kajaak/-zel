@@ -1,0 +1,882 @@
+/* style.css - Premium Romantik Aşk Sitesi Tasarım Sistemi */
+
+:root {
+    --primary: #ff4d6d;
+    --primary-hover: #ff758f;
+    --primary-light: #ffb3c1;
+    --primary-dark: #c9184a;
+    --bg-gradient: linear-gradient(135deg, #ffe5ec 0%, #ffc2d1 100%);
+    --glass-bg: rgba(255, 255, 255, 0.55);
+    --glass-border: rgba(255, 255, 255, 0.4);
+    --glass-shadow: 0 8px 32px 0 rgba(255, 77, 109, 0.15);
+    --text-color: #2b2d42;
+    --text-muted: #595d75;
+    --font-handwritten: 'Great Vibes', cursive;
+    --font-sans: 'Outfit', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-sans);
+    color: var(--text-color);
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: var(--bg-gradient);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ================= ARKA PLAN RESİM GEÇİŞ SİSTEMİ ================= */
+.bg-slider {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background-size: cover;
+    background-position: center;
+    transition: background-image 1.5s ease-in-out, filter 1.5s ease-in-out;
+}
+
+.blur-bg {
+    filter: blur(6px) scale(1.05); /* Arka plan fotoğraflarının hafif buğulu ve şık durması için */
+}
+
+.bg-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(to bottom, rgba(255, 229, 236, 0.4) 0%, rgba(255, 194, 209, 0.6) 100%);
+}
+
+#canvas-hearts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none; /* Üzerine tıklanabilsin */
+}
+
+/* ================= ORTAK GLASSMORPHISM KARTI ================= */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    box-shadow: var(--glass-shadow);
+    padding: 2.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px 0 rgba(255, 77, 109, 0.25);
+}
+
+/* ================= 1. ŞİFRE GİRİŞ EKRANI ================= */
+.lock-screen-container {
+    width: 100%;
+    max-width: 480px;
+    padding: 20px;
+    z-index: 10;
+    position: relative;
+}
+
+.lock-card {
+    text-align: center;
+}
+
+.heart-lock-icon {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 1.5rem;
+    cursor: pointer;
+}
+
+.heart-svg {
+    filter: drop-shadow(0 4px 8px rgba(255, 77, 109, 0.4));
+    animation: heartbeat 1.5s infinite alternate ease-in-out;
+}
+
+.lock-keyhole {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 16px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 4px 4px 0 0;
+}
+.lock-keyhole::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: -2px;
+    width: 12px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 0 0 2px 2px;
+}
+
+.love-title-handwritten {
+    font-family: var(--font-handwritten);
+    font-size: 3.5rem;
+    color: var(--primary-dark);
+    margin-bottom: 0.5rem;
+}
+
+.lock-sub {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 2rem;
+}
+
+.password-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+}
+
+input[type="password"] {
+    width: 100%;
+    padding: 14px 20px;
+    border-radius: 50px;
+    border: 1px solid var(--primary-light);
+    outline: none;
+    font-size: 1rem;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="password"]:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(255, 77, 109, 0.2);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(255, 77, 109, 0.5);
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+.error-msg {
+    color: var(--primary-dark);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    min-height: 20px;
+    font-weight: 600;
+}
+
+.hint-container {
+    margin-top: 1rem;
+}
+
+.hint-trigger {
+    font-size: 0.85rem;
+    color: var(--primary-dark);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.hint-text {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+    display: none;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 1px dashed var(--primary-light);
+}
+
+/* ================= 2. ANA SEVGİ PANELİ ================= */
+.main-container {
+    width: 100%;
+    max-width: 1000px;
+    padding: 40px 20px;
+    z-index: 5;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Yüzen Müzik Plak Kontrolü */
+.music-disc-container {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 100;
+    cursor: pointer;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 8px 16px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.music-disc {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.music-disc.playing {
+    animation: spin 3s linear infinite;
+}
+
+.music-waves {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 16px;
+}
+
+.music-waves span {
+    width: 3px;
+    height: 3px;
+    background-color: var(--primary);
+    border-radius: 3px;
+    transition: height 0.2s ease;
+}
+
+.music-disc.playing + .music-waves span:nth-child(1) { animation: wave 1s ease infinite alternate; }
+.music-disc.playing + .music-waves span:nth-child(2) { animation: wave 0.8s ease infinite alternate 0.2s; }
+.music-disc.playing + .music-waves span:nth-child(3) { animation: wave 1.2s ease infinite alternate 0.4s; }
+
+/* Üst Karşılama ve Sayaç */
+.app-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.couple-names {
+    font-family: var(--font-serif);
+    font-size: 2.8rem;
+    color: var(--primary-dark);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.love-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+}
+
+.counter-card {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-family: var(--font-serif);
+    color: var(--primary-dark);
+    font-size: 1.6rem;
+    margin-bottom: 1.2rem;
+}
+
+.section-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+.counter-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    margin-top: 1rem;
+}
+
+.counter-item {
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 16px;
+    padding: 12px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+}
+
+.counter-number {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1.1;
+}
+
+.counter-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-top: 4px;
+    text-transform: uppercase;
+}
+
+/* Izgara Düzeni */
+.app-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 2.5rem;
+}
+
+.span-two {
+    grid-column: span 2;
+}
+
+/* FOTOĞRAF GALERİSİ (Polaroid Kartı Sistemi) */
+.gallery-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.polaroid-gallery-container {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.polaroid-wrapper {
+    position: relative;
+    width: 320px;
+    height: 390px;
+    perspective: 1000px;
+    margin-bottom: 1.5rem;
+}
+
+.polaroid-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    border-radius: 4px;
+    padding: 15px 15px 35px 15px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.6s ease, z-index 0s;
+    cursor: grab;
+}
+
+.polaroid-card:active {
+    cursor: grabbing;
+}
+
+.polaroid-img-wrapper {
+    width: 100%;
+    height: 290px;
+    overflow: hidden;
+    border-radius: 2px;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.polaroid-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.polaroid-card:hover .polaroid-img {
+    transform: scale(1.05);
+}
+
+.polaroid-caption {
+    margin-top: auto;
+    text-align: center;
+    font-family: var(--font-handwritten);
+    font-size: 2.1rem;
+    color: #4a4a4a;
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gallery-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.btn-circle {
+    background: white;
+    border: 1px solid var(--primary-light);
+    color: var(--primary-dark);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(255, 77, 109, 0.15);
+    transition: background-color 0.3s, transform 0.2s, color 0.3s;
+}
+
+.btn-circle:hover {
+    background: var(--primary);
+    color: white;
+    transform: scale(1.08);
+}
+
+.gallery-counter {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+/* AŞK KAVANOZU BÖLÜMÜ */
+.love-notes-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.jar-container {
+    margin: 1.5rem auto;
+    position: relative;
+    cursor: pointer;
+}
+
+.jar-wrapper {
+    width: 100px;
+    height: 140px;
+    border: 5px solid var(--primary-dark);
+    border-radius: 30px 30px 20px 20px;
+    position: relative;
+    background: rgba(255, 255, 255, 0.45);
+    box-shadow: inset 0 8px 15px rgba(255, 77, 109, 0.1), 0 6px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.jar-wrapper:hover {
+    transform: scale(1.08) rotate(3deg);
+}
+
+.jar-wrapper:active {
+    transform: scale(0.95);
+}
+
+.jar-lid {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 14px;
+    background: var(--primary-dark);
+    border-radius: 6px;
+}
+
+.jar-body::before {
+    content: 'Love';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-handwritten);
+    font-size: 1.8rem;
+    color: var(--primary-dark);
+    font-weight: bold;
+    opacity: 0.65;
+}
+
+.jar-hearts {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mini-heart {
+    position: absolute;
+    font-size: 1.4rem;
+    animation: float-heart 2s infinite alternate ease-in-out;
+}
+
+.mini-heart:nth-child(1) { left: 20%; top: 30%; animation-delay: 0.2s; }
+.mini-heart:nth-child(2) { right: 25%; top: 40%; animation-delay: 0.5s; }
+.mini-heart:nth-child(3) { left: 45%; top: 60%; animation-delay: 0.8s; }
+
+.jar-instruction {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--primary-dark);
+    margin-top: 10px;
+}
+
+.love-note-display {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid var(--primary-light);
+    padding: 15px 20px;
+    margin-top: 1.2rem;
+    box-shadow: 0 4px 15px rgba(255, 77, 109, 0.1);
+    max-width: 320px;
+}
+
+.love-note-display p {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--primary-dark);
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+/* SEVGİ OYUNU SLIDER */
+.love-game-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.love-slider-wrapper {
+    width: 100%;
+    max-width: 320px;
+    margin: 2rem 0;
+}
+
+.love-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background: var(--primary-light);
+    outline: none;
+    cursor: pointer;
+}
+
+.love-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: transform 0.1s;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+}
+
+.love-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.slider-percentage {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+    margin: 10px 0;
+}
+
+.slider-message {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    min-height: 24px;
+}
+
+/* Gizli Mektup Tasarımı */
+.secret-letter {
+    width: 100%;
+    max-width: 340px;
+    background: #fffdf5; /* Mektup kağıdı rengi */
+    border: 1px solid #e8e4c9;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    margin-top: 1.5rem;
+    position: relative;
+    text-align: left;
+}
+
+.letter-seal {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32px;
+    height: 32px;
+    background: var(--primary-dark);
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.letter-title {
+    font-family: var(--font-serif);
+    color: var(--primary-dark);
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    border-bottom: 1px dashed rgba(255, 77, 109, 0.2);
+    padding-bottom: 6px;
+    text-align: center;
+}
+
+.letter-text {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #4a4a4a;
+    min-height: 80px;
+}
+
+/* ================= 3. ZAMAN TÜNELİ ================= */
+.timeline-section {
+    margin-top: 2rem;
+}
+
+.timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 2rem auto 0;
+}
+
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background-color: var(--primary-light);
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -2px;
+    border-radius: 2px;
+}
+
+.timeline-item {
+    padding: 10px 40px;
+    position: relative;
+    background-color: inherit;
+    width: 50%;
+}
+
+.timeline-item::after {
+    content: '❤️';
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    right: -14px;
+    background-color: white;
+    border: 2px solid var(--primary-light);
+    top: 15px;
+    border-radius: 50%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    box-shadow: 0 2px 6px rgba(255, 77, 109, 0.2);
+}
+
+.left {
+    left: 0;
+}
+
+.right {
+    left: 50%;
+}
+
+.right::after {
+    left: -14px;
+}
+
+.timeline-content {
+    padding: 20px;
+    position: relative;
+    border-radius: 16px;
+}
+
+.timeline-content h3 {
+    font-family: var(--font-serif);
+    color: var(--primary-dark);
+    margin-bottom: 8px;
+    font-size: 1.15rem;
+}
+
+.timeline-content p {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+/* FOOTER */
+.app-footer {
+    text-align: center;
+    margin-top: 3rem;
+    font-family: var(--font-handwritten);
+    font-size: 2.2rem;
+    color: var(--primary-dark);
+}
+
+/* ================= ANA ANA KEYFRAME ANIMASYONLARI ================= */
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes wave {
+    0% { height: 3px; }
+    100% { height: 16px; }
+}
+
+@keyframes float-heart {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-8px) rotate(5deg); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.8s ease forwards;
+}
+
+.animate-scale-in {
+    animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(15px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+    0% { opacity: 0; transform: scale(0.85); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* ================= MOBİL UYUMLULUK (RESPONSIVE) ================= */
+@media screen and (max-width: 768px) {
+    .main-container {
+        padding: 20px 10px;
+    }
+    
+    .couple-names {
+        font-size: 2rem;
+    }
+    
+    .timeline::after {
+        left: 31px;
+    }
+    
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+    }
+    
+    .timeline-item::after {
+        left: 17px;
+    }
+    
+    .left::after, .right::after {
+        left: 17px;
+    }
+    
+    .right {
+        left: 0%;
+    }
+    
+    .app-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .span-two {
+        grid-column: span 1;
+    }
+    
+    .counter-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+    
+    .polaroid-wrapper {
+        width: 280px;
+        height: 350px;
+    }
+    
+    .polaroid-img-wrapper {
+        height: 250px;
+    }
+    
+    .polaroid-caption {
+        font-size: 1.8rem;
+    }
+}

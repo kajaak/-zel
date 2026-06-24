@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sadece Senin İçin... ❤️</title>
+    <!-- Google Fonts: Outfit (modern sans) & Playfair Display (zarif serif) & Great Vibes (el yazısı) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Müzik Çalar Elementi -->
+    <audio id="bg-music" loop>
+        <!-- Ciwan Haco - Gulek (Yerel olarak çalması için klasöre gulek.mp3 isminde yükleyebilirsiniz) -->
+        <source src="gulek.mp3" type="audio/mpeg">
+        <source src="muzik.mp3" type="audio/mpeg">
+        <source src="https://assets.codepen.io/4358584/An+Unfinished+Love+Story+-+Piano.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Arka Plan Görsel Geçiş Alanı -->
+    <div id="bg-slider" class="bg-slider blur-bg"></div>
+    <div class="bg-overlay"></div>
+
+    <!-- Kayan Kalpler Canvassı -->
+    <canvas id="canvas-hearts"></canvas>
+
+    <!-- ================= 1. GİRİŞ EKRANI (LOCK SCREEN) ================= -->
+    <section id="lock-screen" class="lock-screen-container">
+        <div class="glass-card lock-card animate-fade-in">
+            <div class="heart-lock-icon">
+                <svg viewBox="0 0 24 24" width="80" height="80" class="heart-svg">
+                    <path fill="#ff4d6d" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                <div class="lock-keyhole"></div>
+            </div>
+            
+            <h1 class="love-title-handwritten">Sadece Senin İçin</h1>
+            <p class="lock-sub">Bu kapı sadece ikimizin dünyasına açılıyor. Giriş yapmak için şifreni gir sevgilim...</p>
+            
+            <div class="password-group">
+                <input type="password" id="love-password" placeholder="Şifrenizi yazın..." autocomplete="off">
+                <button id="btn-login" class="btn-primary">Giriş Yap ❤️</button>
+            </div>
+            <p id="error-message" class="error-msg"></p>
+            
+            <div class="hint-container">
+                <span class="hint-trigger" id="hint-trigger">İpucu mu lazım?</span>
+                <p id="hint-text" class="hint-text">İpucu: Bizim için en özel günün tarihi... (Örn: Gün ve Ay birleşik olarak, 4 haneli. Örnek: 2402)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= 2. ANA SEVGİ PANELİ (MAIN APP) ================= -->
+    <main id="main-app" class="main-container hidden animate-fade-in">
+        
+        <!-- Yüzen Müzik Kontrolü -->
+        <div id="music-control" class="music-disc-container" title="Müziği Çal/Durdur">
+            <div class="music-disc">
+                🎵
+            </div>
+            <div class="music-waves">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <!-- ÜST KISIM: AŞK SAYACI VE KARŞILAMA -->
+        <header class="app-header">
+            <h1 class="couple-names">Seni Çok Seviyorum... ❤️</h1>
+            <p class="love-subtitle">Hayatıma girdiğin andan beri her günüm seninle güzelleşiyor.</p>
+            
+            <!-- Sayaç Kartı -->
+            <div class="glass-card counter-card">
+                <h2 class="section-title">İyi Ki Varsın... Bizim Zamanımız</h2>
+                <div class="counter-grid" id="countdown-timer">
+                    <div class="counter-item">
+                        <span id="years" class="counter-number">00</span>
+                        <span class="counter-label">Yıl</span>
+                    </div>
+                    <div class="counter-item">
+                        <span id="months" class="counter-number">00</span>
+                        <span class="counter-label">Ay</span>
+                    </div>
+                    <div class="counter-item">
+                        <span id="days" class="counter-number">00</span>
+                        <span class="counter-label">Gün</span>
+                    </div>
+                    <div class="counter-item">
+                        <span id="hours" class="counter-number">00</span>
+                        <span class="counter-label">Saat</span>
+                    </div>
+                    <div class="counter-item">
+                        <span id="minutes" class="counter-number">00</span>
+                        <span class="counter-label">Dakika</span>
+                    </div>
+                    <div class="counter-item">
+                        <span id="seconds" class="counter-number">00</span>
+                        <span class="counter-label">Saniye</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- ORTA KISIM: İNTERAKTİF BÖLÜMLER -->
+        <section class="app-grid">
+            
+            <!-- FOTOĞRAF GALERİSİ -->
+            <div class="glass-card gallery-section span-two">
+                <h2 class="section-title">En Güzel Anılarımız 📸</h2>
+                <p class="section-subtitle">Seninle geçirdiğim her an, hayatımın en güzel karesi...</p>
+                
+                <div class="polaroid-gallery-container">
+                    <div class="polaroid-wrapper" id="polaroid-wrapper">
+                        <!-- Polaroid kartlar Javascript ile yüklenecek -->
+                    </div>
+                    <div class="gallery-controls">
+                        <button id="btn-prev" class="btn-circle" title="Önceki Fotoğraf">
+                            <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/></svg>
+                        </button>
+                        <span id="gallery-counter" class="gallery-counter">1 / 11</span>
+                        <button id="btn-next" class="btn-circle" title="Sonraki Fotoğraf">
+                            <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- "NEDEN SENİ SEVİYORUM?" KAVANOZU -->
+            <div class="glass-card love-notes-section">
+                <h2 class="section-title">Neden Seni Seviyorum? 💖</h2>
+                <p class="section-subtitle">Seni sevmemin sayısız nedeninden sadece birkaçı...</p>
+                <div class="jar-container">
+                    <div class="jar-wrapper" id="jar-click">
+                        <div class="jar-lid"></div>
+                        <div class="jar-body">
+                            <div class="jar-hearts">
+                                <span class="mini-heart">❤️</span>
+                                <span class="mini-heart">💖</span>
+                                <span class="mini-heart">💕</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="jar-instruction">Kavanoza dokunarak aşk notunu çek...</p>
+                </div>
+                <div id="love-note-modal" class="love-note-display hidden animate-scale-in">
+                    <p id="love-note-text">Not burada görünecek...</p>
+                </div>
+            </div>
+
+            <!-- "BENİ NE KADAR SEVİYORSUN?" OYUNU -->
+            <div class="glass-card love-game-section">
+                <h2 class="section-title">Beni Ne Kadar Seviyorsun? 🤔</h2>
+                <p class="section-subtitle">Sevgini bu slider ile bana göster sevgilim...</p>
+                
+                <div class="love-slider-wrapper">
+                    <input type="range" id="love-slider" min="0" max="100" value="20" class="love-slider">
+                    <div class="slider-percentage" id="slider-percentage">20%</div>
+                    <div class="slider-message" id="slider-message">Birazcık mı? 🥺</div>
+                </div>
+
+                <!-- Gizli Mektup Alanı (%100 olunca açılacak) -->
+                <div id="secret-letter" class="secret-letter hidden animate-scale-in">
+                    <div class="letter-seal">
+                        ❤️
+                    </div>
+                    <h3 class="letter-title">Sonsuza Kadar...</h3>
+                    <p class="letter-text" id="letter-typing"></p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- KRONOLOJİK HİKAYEMİZ -->
+        <section class="glass-card timeline-section">
+            <h2 class="section-title">Bizim Hikayemiz ✨</h2>
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <div class="timeline-content glass-card">
+                        <h3>İlk Gün 🌟</h3>
+                        <p>Hayatıma girdiğin ve dünyamı tamamen değiştirdiğin o ilk gün...</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content glass-card">
+                        <h3>İlk Buluşma ☕</h3>
+                        <p>Gözlerine bakarken duyduğum o heyecan ve kalbimin ilk kez bu kadar hızlı atması.</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="timeline-content glass-card">
+                        <h3>En Güzel Maceralar ⛰️</h3>
+                        <p>Seninle gittiğimiz her yolculuk, keşfettiğimiz her yeni yer bir ömre bedel.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content glass-card">
+                        <h3>Sonsuz Aşk ♾️</h3>
+                        <p>Gelecekte yazacağımız daha nice güzel sayfalara, el ele ve hep sevgiyle...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="app-footer">
+            <p>Seninle her an, sonsuza kadar... ❤️</p>
+        </footer>
+
+    </main>
+
+    <!-- Confetti JS (Efektler için harici kütüphane ekliyoruz) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
